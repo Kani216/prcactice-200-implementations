@@ -13,7 +13,7 @@ public class RecursiveBinarySearch {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int[] sortedArray = {2, 4, 7, 10, 15, 20, 25};
+        int[] sortedArray = {200,300,400,500,600};
 
         System.out.print("Enter number to search: ");
         int target = scanner.nextInt();
