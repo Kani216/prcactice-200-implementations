@@ -1,35 +1,24 @@
-import java.util.Scanner;
-
 public class Amstrong {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int r=0;
-        int num=0;
+        int n=9474;
 
-        int digit = 0;
-
-        digit=(int)Math.log10(n)+1;
-        int temp=n;
-        do {
-
-              r=temp%10;
-
-            num+=(int)Math.pow(r,digit);
-
-            temp/=10;
-
-            }
-
-        while (temp>0) ;
-        System.out.print(num + " ");
-        if(n==num){
-            System.out.print("Amstrong");
+        int digit=(int)Math.log10(n)+1;
+        int sum=Amstrong(digit, n);
+        System.out.print(sum);
+        if(sum==n){
+            System.out.print("is amstrong");
         }else{
-            System.out.print("Not Amstrong");
+            System.out.print("Not amstrong");
         }
 
 
+    }
+    public static int Amstrong(int digit,int n){
+        if(n==0){
+            return 1;
 
+        }
+        int r=n%10;
+        return(int) Math.pow(r,digit)+Amstrong(n/10,digit);
     }
 }
