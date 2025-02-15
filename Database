@@ -1,0 +1,86 @@
+import java.io.*;
+import java.util.*;
+
+class Voter {
+    String name;
+    int age;
+    String vote;
+
+    public Voter(String name, int age, String vote) {
+        this.name = name;
+        this.age = age;
+        this.vote = vote;
+    }
+
+    @Override
+    public String toString() {
+        return name + ", " + age + ", " + vote;
+    }
+}
+
+public class VotingSystem {
+    private static final String FILE_NAME = "voters.txt";
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        List<Voter> voters = new ArrayList<>();
+        
+        System.out.println("Welcome to the Voting System!");
+        while (true) {
+            System.out.println("1. Cast Vote\n2. View Votes\n3. Exit");
+            System.out.print("Enter choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter Name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter Age: ");
+                    int age = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                    if (age < 18) {
+                        System.out.println("You must be 18 or older to vote.");
+                        break;
+                    }
+                    System.out.print("Enter your Vote (Candidate Name): ");
+                    String vote = scanner.nextLine();
+                    Voter voter = new Voter(name, age, vote);
+                    voters.add(voter);
+                    saveToFile(voter);
+                    System.out.println("Vote Casted Successfully!");
+                    break;
+                case 2:
+                    System.out.println("Voting Records:");
+                    readFromFile();
+                    break;
+                case 3:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice, please try again.");
+            }
+        }
+    }
+
+    private static void saveToFile(Voter voter) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
+            writer.write(voter.toString());
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
+    }
+
+    private static void readFromFile() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+    }
+}
